@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -49,7 +50,13 @@ def create_sum_rent_perdays_df(df):
     
 	return sum_rent_perdays_df
 
-hour_df = pd.read_csv("main_data.csv")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+file_path = os.path.join(current_dir, "main_data.csv")
+
+if os.path.exists(file_path):
+    hour_df = pd.read_csv(file_path)
+else:
+    raise FileNotFoundError(f"File {file_path} tidak ditemukan.")
 
 datetime_columns = ["dteday"]
 hour_df.sort_values(by="dteday", inplace=True)
